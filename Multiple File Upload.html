@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Dropify — Override your input files with style.</title>
+        <meta name="description" content="">
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+        <meta name="format-detection" content="telephone=no">
+        <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,700,900|Roboto+Condensed:400,300,700' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="dist/css/demo.css">
+        <link rel="stylesheet" href="dist/css/dropify.min.css">
+    </head>
+    <body>
+        <header id="header">
+            <hgroup>
+                <h1>Dropify</h1>
+                <h2>Override your input files with style</h2>
+            </hgroup>
+        </header>
+	<form action="index.html" method="post" enctype="multipart/form-data"> 
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-3"></div>
+                <div class="col-sm-6">
+                    <br />
+                    <label for="input-file-events">You can use events</label>
+                    <input type="file" id="input-file-events" 
+                    		data-allowed-file-extensions="pdf psd jpg"
+                    		data-max-file-size-preview="3M"
+                    		multiple="multiple"
+                    		class="dropify-event" 
+                    		data-default-file="src/images/test-image-1.jpg" />
+                    <br />
+                </div>
+            </div>
+        </div>
+	</form>
+       
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+        <script src="dist/js/dropify.js"></script>
+        <script>
+            $(document).ready(function(){
+               
+                // Used events
+                var drEvent = $('#input-file-events').dropify();
+                drEvent.on('dropify.beforeClear', function(event, element){
+                    console.log(element);
+                    return confirm("Do you really want to delete \"" + element.file.name + "\" ?");
+                });
+                drEvent.on('dropify.afterClear', function(event, element){
+                    alert('File deleted');
+                });
+                drEvent.on('dropify.errors', function(event, element){
+                    console.log('Has Errors');
+                });
+                
+               /* $("input[type=file]").change(function (){
+		            //var modelname=$("#inputmodelname").val();
+		            for (var i = 0; i < $("#input-file-events").get(0).files.length; ++i) {
+		                var file1=$("#input-file-events").get(0).files[i].name;
+		
+		                if(file1){                        
+		                    var file_size=$("#input-file-events").get(0).files[i].size;
+		                    if(file_size<2097152){
+		                        var ext = file1.split('.').pop().toLowerCase();                            
+		                        if($.inArray(ext,['jpg','jpeg','gif'])===-1){
+		                            alert("Invalid file extension");
+		                            return false;
+		                        }
+		
+		                    }else{
+		                        alert("Screenshot size is too large.");
+		                        return false;
+		                    }                        
+		                }else{
+		                    alert("fill all fields..");         
+		                    return false;
+		                }
+		            }
+		        });*/
+
+                
+            });
+        </script>
+    </body>
+</html>
